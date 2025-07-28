@@ -15,12 +15,13 @@ library(tidyverse)
 # Let's get a list of DEF values
 # and then create a matrix to append weapon dps
 def_list <- 0:60
-dps_matrix <- def_list
+dps_matrix <- as_tibble(def_list) |>
+  rename(DEF = value)
 
 # Assign index of desired class/weapon for dps calculation
 # Can also make lists for multiple comparisons
 class_index <- 12
-weapon_index <- 4
+weapon_index <- 13
 
 # Attempt to build function for weapon/class dps
 # Updates dps_matrix based on class/weapon
