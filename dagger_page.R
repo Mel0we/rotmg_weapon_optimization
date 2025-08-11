@@ -48,6 +48,10 @@ dagger_table <- dagger_table |>
   rename(average_damage = `Damage (Average)`) |>
   rename(num_shots = `Shots(Arc Gap)`)
 
+# Eliminate spaces from weapon names
+# This aids in completing the dps_charts later
+dagger_table$Name <- gsub(' ', '_', dagger_table$Name)
+
 # Create new columns (RoF, Stat Bonuses)
 dagger_table <- dagger_table |>
   mutate(RoF = NA,
