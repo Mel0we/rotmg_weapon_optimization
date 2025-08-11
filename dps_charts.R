@@ -24,9 +24,10 @@ class_index <- 12
 weapon_index <- 13
 
 # Attempt to build function for weapon/class dps
-# Updates dps_matrix based on class/weapon
-# Still updating functionality to rename dps column
-# as it is added
+# Appends dps column to dps matrix
+# and renames based on weapon name
+## Rename functionality is not working yet
+## Will come back to fix at some point
 
 dps_calc <- function(class, weapon) {
   avg_dmg <- dagger_table$average_damage[weapon]
@@ -35,12 +36,25 @@ dps_calc <- function(class, weapon) {
   atks_per_sec <- 1.5 + 6.5 * (stats_table$DEX[class] / 75)
   dps <- (avg_dmg * dmg_mult - def_list) * num_shots * atks_per_sec
   dps_matrix <<- cbind(dps_matrix, dps)
+  # weapon_name <- 'w'
+  # assign(weapon_name, dagger_table$Name[weapon])
+  # rename(dps_matrix, weapon_name = dps)
 }
-dps_calc(class_index, weapon_index)
+dps_calc(12, 13)
+
+
+# Insert desired class/weapon combos to compare in comp_list
+comp_list <- list(c(12, 13), c(12, 14), c(12, 15))
+# The following loop applies those combos to the dps_calc function
+## ^This does not work like desired
+for (i in comp_list) {
+  dps_calc(comp_list)
+}
+
 
 # Finally we can visualize the relationship
 dps_matrix |> ggplot(
-  aes(x = def_list, y = dps)) +
+  aes(x = DEF, y = dps)) +
   geom_line(color = 'red') +
   labs(x = 'Enemy Defence', y = 'Damage per Second (DPS)') +
   theme_minimal()
